@@ -1,4 +1,4 @@
-package com.sun.spoonacular_3
+package com.sun.spoonacular
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

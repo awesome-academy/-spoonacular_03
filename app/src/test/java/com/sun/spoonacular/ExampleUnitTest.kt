@@ -1,4 +1,4 @@
-package com.sun.spoonacular_3
+package com.sun.spoonacular
 
 import org.junit.Test
 
