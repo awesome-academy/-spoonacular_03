@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import com.sun.spoonacular.ui.base.MainFragment
+import com.sun.spoonacular.ui.splash.SplashFragment
 import com.sun.spoonacular.utils.addFragment
 
 class MainActivity : AppCompatActivity() {
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        addFragment(MainFragment.newInstance(), R.id.mainContainer)
+        addFragment(SplashFragment.newInstance(),R.id.mainContainer)
     }
 
     override fun onBackPressed() {
