@@ -1,10 +1,11 @@
-package com.sun.spoonacular
+package com.sun.spoonacular.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
+import com.sun.spoonacular.R
 import com.sun.spoonacular.ui.splash.SplashFragment
 import com.sun.spoonacular.utils.addFragmentNoStack
 
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         if (supportFragmentManager.backStackEntryCount > 0) {
             supportFragmentManager.popBackStack()
         } else if (!isDoubleBackPressed) {
-            this.isDoubleBackPressed = true
+            isDoubleBackPressed = true
             Toast.makeText(this, R.string.back_again, Toast.LENGTH_SHORT).show()
             Handler(Looper.getMainLooper()).postDelayed({ isDoubleBackPressed = false }, DELAY_TIME)
             return

@@ -6,13 +6,16 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sun.spoonacular.R
+import com.sun.spoonacular.data.model.Recipe
 import com.sun.spoonacular.utils.MenuNumber
 import com.sun.spoonacular.utils.hideKeyboard
 import kotlinx.android.synthetic.main.fragment_main.*
 
+@Suppress("UNCHECKED_CAST")
 class MainFragment : Fragment(), BottomNavigationView.OnNavigationItemSelectedListener,
     ViewPager.OnPageChangeListener {
 
@@ -45,12 +48,14 @@ class MainFragment : Fragment(), BottomNavigationView.OnNavigationItemSelectedLi
         hideKeyboard()
     }
 
-    override fun onPageScrollStateChanged(state: Int) {}
+    override fun onPageScrollStateChanged(state: Int) {
+    }
 
     private fun setUpViewPager() {
-        containerViewpager.adapter = fragmentManager?.let {
-            MainMenuViewPagerAdapter(it)
-        }
+        containerViewpager.adapter = MainMenuViewPagerAdapter(
+            childFragmentManager,
+            (arguments?.get(BUNDLE_LIST_RECIPE_KEY) as? ArrayList<Recipe>) ?: ArrayList()
+        )
         containerViewpager.apply {
             addOnPageChangeListener(this@MainFragment)
             currentItem = MenuNumber.HOME.pageNumber
@@ -60,7 +65,10 @@ class MainFragment : Fragment(), BottomNavigationView.OnNavigationItemSelectedLi
 
     companion object {
         private const val LIMIT_PAGE = 2
+        private const val BUNDLE_LIST_RECIPE_KEY = "BUNDLE_LIST_RECIPE_KEY"
 
-        fun newInstance() = MainFragment()
+        fun newInstance(recipes: ArrayList<Recipe>) = MainFragment().apply {
+            arguments = bundleOf(BUNDLE_LIST_RECIPE_KEY to recipes)
+        }
     }
 }
