@@ -7,19 +7,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Recipe(
-    @SerializedName("id")
-    @Expose
-    val id: Int?,
-    @SerializedName("title")
-    @Expose
-    val title: String?,
-    @SerializedName("readyInMinutes")
-    @Expose
-    val timeCook: String?,
-    @SerializedName("spoonacularScore")
-    @Expose
-    val score: Double?,
-    @SerializedName("image")
-    @Expose
-    val image: String?
+    @SerializedName("id") @Expose val id: Int?,
+    @SerializedName("title") @Expose val title: String?,
+    @SerializedName("readyInMinutes") @Expose val timeCook: String?,
+    @SerializedName("spoonacularScore") @Expose val score: Double?,
+    @SerializedName("image") @Expose val image: String?
 ) : Parcelable

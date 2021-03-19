@@ -5,7 +5,6 @@ import okhttp3.Interceptor
 import okhttp3.Response
 
 class AuthenticationInterceptor: Interceptor {
-
     override fun intercept(chain: Interceptor.Chain): Response {
         val newRequest = chain.request().newBuilder()
             .addHeader(Constant.API_KEY, Constant.API_VALUE)

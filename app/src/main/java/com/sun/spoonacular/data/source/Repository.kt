@@ -7,7 +7,6 @@ class Repository private constructor(private val remote: DataSource.Remote) {
     suspend fun getRecipe() = remote.getRecipe()
 
     companion object {
-        private var instance : Repository? = null
-        fun getInstance() = instance ?: Repository((RemoteDataSource.getInstance())).also { instance = it }
+        fun newInstance() = Repository(RemoteDataSource.newInstance())
     }
 }

@@ -48,7 +48,13 @@ class MainFragment : Fragment(), BottomNavigationView.OnNavigationItemSelectedLi
     override fun onPageScrollStateChanged(state: Int) {}
 
     private fun setUpViewPager() {
+<<<<<<< Updated upstream
         containerViewpager.adapter = MainMenuViewPagerAdapter(childFragmentManager)
+=======
+        containerViewpager.adapter = fragmentManager?.let {
+            MainMenuViewPagerAdapter(it)
+        }
+>>>>>>> Stashed changes
         containerViewpager.apply {
             addOnPageChangeListener(this@MainFragment)
             currentItem = MenuNumber.HOME.pageNumber

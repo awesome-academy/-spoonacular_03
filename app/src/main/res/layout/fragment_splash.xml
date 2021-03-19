@@ -10,7 +10,7 @@
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/dp_30"
         app:cardCornerRadius="@dimen/dp_100"
-        app:layout_constraintBottom_toTopOf="@+id/textAppName"
+        app:layout_constraintBottom_toTopOf="@+id/textApp"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,7 @@
         android:layout_marginBottom="@dimen/dp_30"
         android:indeterminateDrawable="@drawable/custom_progress_bar"
         android:translationZ="@dimen/dp_10"
-        app:layout_constraintBottom_toTopOf="@+id/textAppName"
+        app:layout_constraintBottom_toTopOf="@+id/textApp"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +39,7 @@
         app:layout_constraintWidth_percent="0.44" />
 
     <TextView
-        android:id="@+id/textAppName"
+        android:id="@+id/textApp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp_20"

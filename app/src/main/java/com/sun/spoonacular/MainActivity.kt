@@ -5,8 +5,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
+<<<<<<< Updated upstream:app/src/main/java/com/sun/spoonacular/MainActivity.kt
+=======
+import com.sun.spoonacular.ui.base.MainFragment
+>>>>>>> Stashed changes:app/src/main/java/com/sun/spoonacular/ui/MainActivity.kt
 import com.sun.spoonacular.ui.splash.SplashFragment
-import com.sun.spoonacular.utils.addFragmentNoStack
+import com.sun.spoonacular.utils.addFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        addFragmentNoStack(SplashFragment.newInstance(), R.id.mainContainer)
+        addFragment(SplashFragment.newInstance(),R.id.mainContainer)
     }
 
     override fun onBackPressed() {
