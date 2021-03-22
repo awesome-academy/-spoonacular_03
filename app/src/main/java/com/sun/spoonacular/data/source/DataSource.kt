@@ -7,5 +7,6 @@ interface DataSource {
 
     interface Remote {
         suspend fun getRecipe(): Response<RecipeResponse>
+        suspend fun getRecipes(): Response<RecipeResponse>
     }
 }

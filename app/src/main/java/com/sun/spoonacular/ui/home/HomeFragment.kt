@@ -9,11 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.sun.spoonacular.R
 import com.sun.spoonacular.data.model.Recipe
 import com.sun.spoonacular.ui.detail.DetailRecipeFragment
+import com.sun.spoonacular.ui.home.recyclerview.RecipeAdapter
 import com.sun.spoonacular.ui.home.slide.HomeSlideAdapter
 import com.sun.spoonacular.utils.addFragment
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -22,8 +24,18 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class HomeFragment : Fragment() {
 
     private var recipeSlide = arrayListOf<Recipe>()
+    private var recipeRecyclerView = arrayListOf<Recipe>()
     private var getCurrentItem = 0
     private var isChecked = false
+
+    private val adapter by lazy {
+        RecipeAdapter {
+            (activity as? AppCompatActivity)?.addFragment(
+                DetailRecipeFragment.newInstance(it.id),
+                R.id.mainContainer
+            )
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,8 +50,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun initDataHome() {
-        recipeSlide = (arguments?.get(BUNDLE_LIST_RECIPE_KEY) as? ArrayList<Recipe>) ?: ArrayList()
+        recipeSlide =
+            (arguments?.get(BUNDLE_LIST_RECIPE_SLIDE_KEY) as? ArrayList<Recipe>) ?: ArrayList()
+        recipeRecyclerView =
+            (arguments?.get(BUNDLE_LIST_RECIPE_RECYCLERVIEW_KEY) as? ArrayList<Recipe>)
+                ?: ArrayList()
         setUpViewPager(viewPagerSlideHome)
+        adapter.submitList(recipeRecyclerView)
+        recyclerViewHome.adapter = adapter
     }
 
     private fun setUpViewPager(applyViewPageSlider: ViewPager2) {
@@ -76,10 +94,16 @@ class HomeFragment : Fragment() {
         private const val DELAY_NEXT_ITEM = 2000L
         private const val GET_ITEM_START = 0
         private const val ITEM_NUMBER = 1
-        private const val BUNDLE_LIST_RECIPE_KEY = "BUNDLE_LIST_RECIPE_KEY"
+        private const val BUNDLE_LIST_RECIPE_SLIDE_KEY = "BUNDLE_LIST_RECIPE_SLIDE_KEY"
+        private const val BUNDLE_LIST_RECIPE_RECYCLERVIEW_KEY =
+            "BUNDLE_LIST_RECIPE_RECYCLERVIEW_KEY"
 
-        fun newInstance(recipes: ArrayList<Recipe>) = HomeFragment().apply {
-            arguments = bundleOf(BUNDLE_LIST_RECIPE_KEY to recipes)
-        }
+        fun newInstance(recipeSlide: ArrayList<Recipe>, recipeRecyclerView: ArrayList<Recipe>) =
+            HomeFragment().apply {
+                arguments = bundleOf(
+                    BUNDLE_LIST_RECIPE_SLIDE_KEY to recipeSlide,
+                    BUNDLE_LIST_RECIPE_RECYCLERVIEW_KEY to recipeRecyclerView
+                )
+            }
     }
 }

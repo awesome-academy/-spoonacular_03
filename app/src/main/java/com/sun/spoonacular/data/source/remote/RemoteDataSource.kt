@@ -11,6 +11,10 @@ class RemoteDataSource private constructor() : DataSource.Remote {
         return ApiClient.apiService.getRecipe()
     }
 
+    override suspend fun getRecipes(): Response<RecipeResponse> {
+        return ApiClient.apiService.getRecipes()
+    }
+
     companion object {
         private var instance: RemoteDataSource? = null
         fun getInstance() = instance ?: RemoteDataSource().also { instance = it }
