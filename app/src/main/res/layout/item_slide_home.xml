@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/viewShape"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0.5"
+        android:background="@drawable/bg_shape"
+        android:translationZ="@dimen/dp_10"
+        app:layout_constraintBottom_toBottomOf="@id/cardImageSlide"
+        app:layout_constraintDimensionRatio="250:39"
+        app:layout_constraintLeft_toLeftOf="@id/cardImageSlide"
+        app:layout_constraintWidth_percent="0.75" />
+
+    <TextView
+        android:id="@+id/textTitleDish"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_9"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginEnd="@dimen/dp_9"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_15"
+        android:textStyle="bold"
+        android:translationZ="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="@id/viewShape"
+        app:layout_constraintLeft_toLeftOf="@id/viewShape"
+        app:layout_constraintStart_toStartOf="@id/viewShape"
+        app:layout_constraintTop_toTopOf="@id/viewShape" />
+
+    <TextView
+        android:id="@+id/textTimeCook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_9"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_10"
+        android:textStyle="italic"
+        android:translationZ="@dimen/dp_10"
+        app:layout_constraintBottom_toBottomOf="@+id/viewShape"
+        app:layout_constraintEnd_toEndOf="@id/viewShape"
+        app:layout_constraintStart_toStartOf="@id/viewShape"
+        app:layout_constraintTop_toBottomOf="@id/textTitleDish" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardImageSlide"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/dp_10"
+        app:cardCornerRadius="@dimen/dp_10"
+        app:layout_constraintDimensionRatio="334:200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageSlide"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription" />
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

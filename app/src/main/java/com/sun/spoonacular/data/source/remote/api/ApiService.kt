@@ -7,6 +7,6 @@ import retrofit2.http.GET
 
 interface ApiService {
 
-    @GET(Constant.RANDOM)
+    @GET(Constant.RANDOM_5)
     suspend fun getRecipe() : Response<RecipeResponse>
 }

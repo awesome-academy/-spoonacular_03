@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sun.spoonacular.R
+import com.sun.spoonacular.data.model.Recipe
 import com.sun.spoonacular.ui.base.MainFragment
 import com.sun.spoonacular.utils.*
 import kotlinx.android.synthetic.main.fragment_splash.*
@@ -35,12 +36,10 @@ class SplashFragment : Fragment() {
             userList?.let { it ->
                 when (it.status) {
                     Status.SUCCESS -> {
-                        Toast.makeText(
-                            context,
-                            it.data?.body()?.recipes?.size.toString(),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        replaceFragmentNoStack(MainFragment.newInstance(), R.id.mainContainer)
+                        replaceFragmentNoStack(
+                            MainFragment.newInstance(it.data?.body()?.recipes as ArrayList<Recipe>),
+                            R.id.mainContainer
+                        )
                     }
                     Status.ERROR -> {
                         progressBar.visibility = View.GONE
