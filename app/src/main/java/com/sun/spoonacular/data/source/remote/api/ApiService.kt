@@ -1,5 +1,6 @@
 package com.sun.spoonacular.data.source.remote.api
 
+import com.sun.spoonacular.data.model.Recipe
 import com.sun.spoonacular.data.model.RecipeDetail
 import com.sun.spoonacular.data.model.RecipeResponse
 import retrofit2.Response
@@ -17,4 +18,9 @@ interface ApiService {
         @Path("ids") id: Int,
         @Query("includeNutrition") number: Boolean = true
     ): Response<RecipeDetail>
+
+    @GET("{ids}/similar")
+    suspend fun getRecipeSimilar(
+        @Path("ids") id: Int,
+    ): Response<List<Recipe>>
 }
