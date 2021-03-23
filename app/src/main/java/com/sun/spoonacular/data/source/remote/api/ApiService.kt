@@ -9,4 +9,7 @@ interface ApiService {
 
     @GET(Constant.RANDOM_5)
     suspend fun getRecipe() : Response<RecipeResponse>
+
+    @GET(Constant.RANDOM_10)
+    suspend fun getRecipes() : Response<RecipeResponse>
 }

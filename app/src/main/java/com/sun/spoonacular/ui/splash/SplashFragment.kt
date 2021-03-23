@@ -15,6 +15,9 @@ import kotlinx.android.synthetic.main.fragment_splash.*
 
 class SplashFragment : Fragment() {
 
+    private var recipeSlide = arrayListOf<Recipe>()
+    private var recipeRecyclerView = arrayListOf<Recipe>()
+
     private val splashViewModel by lazy {
         ViewModelProvider(this).get(SplashViewModel::class.java)
     }
@@ -32,24 +35,31 @@ class SplashFragment : Fragment() {
     }
 
     private fun registerObservers() {
-        splashViewModel.getRecipe().observe(viewLifecycleOwner, { userList ->
-            userList?.let { it ->
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        replaceFragmentNoStack(
-                            MainFragment.newInstance(it.data?.body()?.recipes as ArrayList<Recipe>),
-                            R.id.mainContainer
-                        )
-                    }
-                    Status.ERROR -> {
-                        progressBar.visibility = View.GONE
-                        Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
-                    }
-                    Status.LOADING -> {
+        splashViewModel.apply {
+            getRecipe().observe(viewLifecycleOwner, {
+                it?.let {
+                    when (it.status) {
+                        Status.SUCCESS -> {
+                            recipeSlide = it.data?.get(0)?.body()?.recipes as ArrayList<Recipe>
+                            recipeRecyclerView = it.data[1].body()?.recipes as ArrayList<Recipe>
+                            replaceFragmentNoStack(
+                                MainFragment.newInstance(
+                                    recipeSlide,
+                                    recipeRecyclerView
+                                ),
+                                R.id.mainContainer
+                            )
+                        }
+                        Status.ERROR -> {
+                            progressBar.visibility = View.GONE
+                            Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
+                        }
+                        Status.LOADING -> {
+                        }
                     }
                 }
-            }
-        })
+            })
+        }
     }
 
     companion object {

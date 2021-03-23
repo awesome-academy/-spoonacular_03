@@ -54,7 +54,8 @@ class MainFragment : Fragment(), BottomNavigationView.OnNavigationItemSelectedLi
     private fun setUpViewPager() {
         containerViewpager.adapter = MainMenuViewPagerAdapter(
             childFragmentManager,
-            (arguments?.get(BUNDLE_LIST_RECIPE_KEY) as? ArrayList<Recipe>) ?: ArrayList()
+            (arguments?.get(BUNDLE_LIST_RECIPE_SLIDE_KEY) as? ArrayList<Recipe>) ?: ArrayList(),
+            (arguments?.get(BUNDLE_LIST_RECIPE_RECYCLERVIEW_KEY) as? ArrayList<Recipe>) ?: ArrayList()
         )
         containerViewpager.apply {
             addOnPageChangeListener(this@MainFragment)
@@ -65,10 +66,16 @@ class MainFragment : Fragment(), BottomNavigationView.OnNavigationItemSelectedLi
 
     companion object {
         private const val LIMIT_PAGE = 2
-        private const val BUNDLE_LIST_RECIPE_KEY = "BUNDLE_LIST_RECIPE_KEY"
+        private const val BUNDLE_LIST_RECIPE_SLIDE_KEY = "BUNDLE_LIST_RECIPE_SLIDE_KEY"
+        private const val BUNDLE_LIST_RECIPE_RECYCLERVIEW_KEY =
+            "BUNDLE_LIST_RECIPE_RECYCLERVIEW_KEY"
 
-        fun newInstance(recipes: ArrayList<Recipe>) = MainFragment().apply {
-            arguments = bundleOf(BUNDLE_LIST_RECIPE_KEY to recipes)
-        }
+        fun newInstance(recipeSlide: ArrayList<Recipe>, recipeRecyclerView: ArrayList<Recipe>) =
+            MainFragment().apply {
+                arguments = bundleOf(
+                    BUNDLE_LIST_RECIPE_SLIDE_KEY to recipeSlide,
+                    BUNDLE_LIST_RECIPE_RECYCLERVIEW_KEY to recipeRecyclerView
+                )
+            }
     }
 }

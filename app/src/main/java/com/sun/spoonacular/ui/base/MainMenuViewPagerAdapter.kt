@@ -10,7 +10,8 @@ import com.sun.spoonacular.utils.MenuNumber
 
 class MainMenuViewPagerAdapter(
     fragmentManager: FragmentManager,
-    private val recipes: ArrayList<Recipe>
+    private val recipesSlide: ArrayList<Recipe>,
+    private val recipesRecyclerView: ArrayList<Recipe>
 ) :
     FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
@@ -18,7 +19,7 @@ class MainMenuViewPagerAdapter(
 
     override fun getItem(position: Int) = when (position) {
         MenuNumber.SEARCH.pageNumber -> SearchFragment.newInstance()
-        MenuNumber.HOME.pageNumber -> HomeFragment.newInstance(recipes)
+        MenuNumber.HOME.pageNumber -> HomeFragment.newInstance(recipesSlide, recipesRecyclerView)
         else -> FavouriteFragment.newInstance()
     }
 
