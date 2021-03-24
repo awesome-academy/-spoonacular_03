@@ -6,6 +6,7 @@ class Repository private constructor(private val remote: DataSource.Remote) {
 
     suspend fun getRecipe(number: Int) = remote.getRecipe(number)
     suspend fun getRecipeDetail(idRecipe: Int) = remote.getRecipeDetail(idRecipe)
+    suspend fun getRecipesSimilar(idRecipe: Int) = remote.getRecipesSimilar(idRecipe)
 
     companion object {
         private var instance: Repository? = null

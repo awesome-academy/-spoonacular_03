@@ -36,7 +36,9 @@ class DetailRecipeFragment : Fragment() {
                 it?.let {
                     when (it.status) {
                         Status.SUCCESS -> {
-                            Toast.makeText(context, it.data?.toString(), Toast.LENGTH_SHORT)
+                            Toast.makeText(context, it.data?.get(0).toString(), Toast.LENGTH_SHORT)
+                                .show()
+                            Toast.makeText(context, it.data?.get(1).toString(), Toast.LENGTH_SHORT)
                                 .show()
                         }
                         Status.ERROR -> {

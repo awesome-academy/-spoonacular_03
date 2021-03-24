@@ -9,5 +9,5 @@ import kotlinx.android.parcel.Parcelize
 data class RecipeResponse(
     @SerializedName("recipes")
     @Expose
-    val recipes: List<Recipe>
+    val recipes: List<Recipe>?
 ) : Parcelable

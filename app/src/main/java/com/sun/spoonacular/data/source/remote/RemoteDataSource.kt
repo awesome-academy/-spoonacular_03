@@ -1,5 +1,6 @@
 package com.sun.spoonacular.data.source.remote
 
+import com.sun.spoonacular.data.model.Recipe
 import com.sun.spoonacular.data.model.RecipeDetail
 import com.sun.spoonacular.data.model.RecipeResponse
 import com.sun.spoonacular.data.source.DataSource
@@ -14,6 +15,10 @@ class RemoteDataSource private constructor() : DataSource.Remote {
 
     override suspend fun getRecipeDetail(idRecipe: Int): Response<RecipeDetail> {
         return ApiClient.apiService.getRecipeDetail(idRecipe)
+    }
+
+    override suspend fun getRecipesSimilar(idRecipe: Int): Response<List<Recipe>> {
+        return ApiClient.apiService.getRecipeSimilar(idRecipe)
     }
 
     companion object {

@@ -9,5 +9,5 @@ import kotlinx.android.parcel.Parcelize
 data class StepResponse(
     @SerializedName("steps")
     @Expose
-    val steps: MutableList<Step>
+    val steps: MutableList<Step>?
 ) : Parcelable

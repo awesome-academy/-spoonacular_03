@@ -9,5 +9,5 @@ import kotlinx.android.parcel.Parcelize
 data class NutrientResponse(
     @SerializedName("nutrients")
     @Expose
-    val nutrients: MutableList<Nutrient>
+    val nutrients: MutableList<Nutrient>?
 ) : Parcelable
