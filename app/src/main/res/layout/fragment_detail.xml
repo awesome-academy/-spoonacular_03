@@ -1,9 +1,230 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_500"
-    tools:context=".ui.detail.DetailRecipeFragment">
+    android:background="@color/color_1F261B"
+    android:clickable="true"
+    android:focusable="true">
 
+    <LinearLayout
+        android:id="@+id/viewLoading"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/color_1F261B"
+        android:translationZ="@dimen/dp_15"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_50"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:indeterminateDrawable="@drawable/custom_progress_bar_detail" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/color_1F261B"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgFavourite"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/dp_12"
+                android:background="@drawable/ic_favourite"
+                android:scaleType="fitCenter"
+                android:translationZ="@dimen/dp_10"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.1" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgBack"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/dp_12"
+                android:background="@drawable/ic_back"
+                android:scaleType="fitCenter"
+                android:translationZ="@dimen/dp_10"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.1" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardTopDetail"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:backgroundTint="@color/color_1F261B"
+                app:layout_constraintDimensionRatio="361:240"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imageDish"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scaleType="fitXY"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/one_corner_image" />
+
+                <View
+                    android:id="@+id/viewShape"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_25"
+                    android:alpha="0.5"
+                    android:background="@drawable/bg_shape_detail"
+                    android:translationZ="@dimen/dp_10"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintWidth_percent="0.5" />
+
+                <TextView
+                    android:id="@+id/textTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_3"
+                    android:fontFamily="@font/roboto_mono"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/sp_13"
+                    android:textStyle="italic"
+                    android:translationZ="@dimen/dp_10"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/viewShape"
+                    app:layout_constraintStart_toStartOf="@id/viewShape" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textTitleDish"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_27"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_25"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardTopDetail" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonIngredient"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_28"
+                android:layout_marginTop="@dimen/dp_30"
+                android:background="@drawable/bg_buton_detail1"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:text="@string/ingredient"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/sp_12"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toStartOf="@+id/buttonNutrient"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textTitleDish"
+                app:layout_constraintWidth_percent="0.35" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonNutrient"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_28"
+                android:layout_marginTop="@dimen/dp_30"
+                android:background="@drawable/bg_button_detail"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:text="@string/nutrient"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/sp_12"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/buttonIngredient"
+                app:layout_constraintTop_toBottomOf="@+id/textTitleDish"
+                app:layout_constraintWidth_percent="0.35" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPagerStep"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp_26"
+                app:layout_constraintDimensionRatio="320:200"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonNutrient" />
+
+            <TextView
+                android:id="@+id/textStepError"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp_26"
+                android:fontFamily="@font/roboto_mono"
+                android:gravity="center"
+                android:text="@string/have_no_step"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="italic"
+                android:visibility="invisible"
+                app:layout_constraintDimensionRatio="320:200"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonNutrient" />
+
+            <TextView
+                android:id="@+id/textSimilarRecipe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_18"
+                android:layout_marginTop="@dimen/dp_16"
+                android:fontFamily="@font/roboto"
+                android:text="@string/similars_recipe"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewPagerStep" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewSimilarRecipe"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textSimilarRecipe"
+                tools:listitem="@layout/item_similar_recipe" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

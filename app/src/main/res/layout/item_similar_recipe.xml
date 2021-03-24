@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp_10"
+    android:background="@drawable/bg_step"
+    android:padding="@dimen/dp_1">
+
+    <View
+        android:id="@+id/viewShape"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0.4"
+        android:background="@drawable/bg_similar_recipe_shape"
+        android:translationZ="@dimen/dp_10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="250:30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textTitleDish"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_9"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginEnd="@dimen/dp_9"
+        android:ellipsize="end"
+        android:fontFamily="@font/roboto_condensed"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_14"
+        android:textStyle="bold"
+        android:translationZ="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="@id/viewShape"
+        app:layout_constraintLeft_toLeftOf="@id/viewShape"
+        app:layout_constraintStart_toStartOf="@id/viewShape"
+        app:layout_constraintTop_toTopOf="@id/viewShape" />
+
+    <TextView
+        android:id="@+id/textTimeCook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_9"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_11"
+        android:textStyle="italic"
+        android:translationZ="@dimen/dp_10"
+        android:fontFamily="@font/roboto_mono"
+        app:layout_constraintEnd_toEndOf="@id/viewShape"
+        app:layout_constraintLeft_toLeftOf="@id/viewShape"
+        app:layout_constraintStart_toStartOf="@id/viewShape"
+        app:layout_constraintTop_toBottomOf="@id/textTitleDish" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardImageSlide"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_step"
+        app:cardCornerRadius="@dimen/dp_10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="334:225"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="1">
+
+        <ImageView
+            android:id="@+id/imageSimilar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            tools:ignore="ContentDescription" />
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

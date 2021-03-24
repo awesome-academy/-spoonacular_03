@@ -31,4 +31,9 @@
         <item name="colorPrimary">@android:color/black</item>
         <item name="colorOnSurface">@android:color/black</item>
     </style>
+    <!-- Customize them Image Detail -->
+    <style name="one_corner_image">
+        <item name="cornerSizeBottomLeft">@dimen/dp_65</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+    </style>
 </resources>
