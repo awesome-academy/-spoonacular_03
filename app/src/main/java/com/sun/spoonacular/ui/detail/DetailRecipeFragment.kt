@@ -67,6 +67,17 @@ class DetailRecipeFragment : Fragment() {
         viewPagerStep.adapter = stepAdapter
         adapter.submitList(recipesSimilar)
         recyclerViewSimilarRecipe.adapter = adapter
+        buttonNutrient.setOnClickListener {
+            recipeDetail?.nutrients?.let {
+                NutrientFragment.newInstance(it.nutrients?.toList())
+                    .show(childFragmentManager, null)
+            }
+        }
+        buttonIngredient.setOnClickListener {
+            recipeDetail?.ingredient?.let {
+                IngredientFragment.newInstance(it).show(childFragmentManager, null)
+            }
+        }
     }
 
     private fun registerObservers() {
