@@ -11,12 +11,11 @@ import com.sun.spoonacular.R
 import com.sun.spoonacular.data.model.Recipe
 import com.sun.spoonacular.ui.base.MainFragment
 import com.sun.spoonacular.utils.*
-import kotlinx.android.synthetic.main.fragment_splash.*
 
 class SplashFragment : Fragment() {
 
-    private var recipeSlide = arrayListOf<Recipe>()
-    private var recipeRecyclerView = arrayListOf<Recipe>()
+    private var recipeSlides = arrayListOf<Recipe>()
+    private var recipeRecyclerViews = arrayListOf<Recipe>()
 
     private val splashViewModel by lazy {
         ViewModelProvider(this).get(SplashViewModel::class.java)
@@ -36,27 +35,36 @@ class SplashFragment : Fragment() {
 
     private fun registerObservers() {
         splashViewModel.apply {
-            getRecipe().observe(viewLifecycleOwner, {
+            recipeSlide.observe(viewLifecycleOwner, {
                 it?.let {
                     when (it.status) {
-                        Status.SUCCESS -> {
-                            recipeSlide = it.data?.get(0)?.body()?.recipes as ArrayList<Recipe>
-                            recipeRecyclerView = it.data[1].body()?.recipes as ArrayList<Recipe>
-                            replaceFragmentNoStack(
-                                MainFragment.newInstance(
-                                    recipeSlide,
-                                    recipeRecyclerView
-                                ),
-                                R.id.mainContainer
-                            )
-                        }
-                        Status.ERROR -> {
-                            progressBar.visibility = View.GONE
-                            Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
-                        }
-                        Status.LOADING -> {
-                        }
+                        Status.SUCCESS -> recipeSlides =
+                            it.data?.body()?.recipes as ArrayList<Recipe>
+                        Status.ERROR -> Toast.makeText(
+                            context, exception.toString(), Toast.LENGTH_SHORT
+                        ).show()
                     }
+                }
+            })
+
+            recipeRecyclerView.observe(viewLifecycleOwner, {
+                it?.let {
+                    when (it.status) {
+                        Status.SUCCESS -> recipeRecyclerViews =
+                            it.data?.body()?.recipes as ArrayList<Recipe>
+                        Status.ERROR -> Toast.makeText(
+                            context, exception.toString(), Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            })
+
+            showLoading.observe(viewLifecycleOwner, {
+                if (!it) {
+                    replaceFragmentNoStack(
+                        MainFragment.newInstance(recipeSlides, recipeRecyclerViews),
+                        R.id.mainContainer
+                    )
                 }
             })
         }

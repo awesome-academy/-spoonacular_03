@@ -1,43 +1,55 @@
 package com.sun.spoonacular.ui.detail
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.sun.spoonacular.data.model.Recipe
+import com.sun.spoonacular.data.model.RecipeDetail
 import com.sun.spoonacular.data.source.Repository
+import com.sun.spoonacular.ui.base.BaseViewModel
 import com.sun.spoonacular.utils.Resource
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import retrofit2.Response
 
-@Suppress("UNCHECKED_CAST")
-class DetailRecipeViewModel : ViewModel() {
+class DetailRecipeViewModel(idRecipe: Int) : BaseViewModel() {
 
-    private val recipeDetail = MutableLiveData<Resource<MutableList<Any>>>()
     private val repository = Repository.getInstance()
 
-    fun fetchRecipeDetail(id: Int) {
-        viewModelScope.launch {
-            recipeDetail.postValue(Resource.loading(null))
+    private val _recipeInfo = MutableLiveData<Resource<Response<RecipeDetail>>>()
+    val recipeInfo: MutableLiveData<Resource<Response<RecipeDetail>>>
+        get() = _recipeInfo
+
+    private val _recipeSimilar = MutableLiveData<Resource<Response<List<Recipe>>>>()
+    val recipeSimilar: MutableLiveData<Resource<Response<List<Recipe>>>>
+        get() = _recipeSimilar
+
+    init {
+        countLoading = 2
+        fetchRecipeInfo(idRecipe)
+        fetchRecipeSimilar(idRecipe)
+    }
+
+    private fun fetchRecipeInfo(id: Int) {
+        showLoading.postValue(true)
+        scope.launch {
             try {
-                coroutineScope {
-                    val recipeInfoDeferred = async { repository.getRecipeDetail(id) }
-                    val recipeSimilarDeferred = async { repository.getRecipesSimilar(id) }
-
-                    val recipeInfo = recipeInfoDeferred.await()
-                    val recipeSimilar = recipeSimilarDeferred.await()
-
-                    val bigRecipeDetail = mutableListOf<Any>()
-
-                    recipeInfo.body()?.let { bigRecipeDetail.add(it) }
-                    recipeSimilar.body()?.let { bigRecipeDetail.add(it) }
-
-                    recipeDetail.postValue(Resource.success(bigRecipeDetail))
-                }
+                recipeInfo.postValue(Resource.success(repository.getRecipeDetail(id)))
+                checkLoading()
             } catch (e: Exception) {
-                recipeDetail.postValue(Resource.error(null, e.toString()))
+                exception.postValue(e)
+                checkLoading()
             }
         }
     }
 
-    fun getRecipeDetail() = recipeDetail
+    private fun fetchRecipeSimilar(id: Int) {
+        showLoading.postValue(true)
+        scope.launch {
+            try {
+                recipeSimilar.postValue(Resource.success(repository.getRecipesSimilar(id)))
+                checkLoading()
+            } catch (e: Exception) {
+                exception.postValue(e)
+                checkLoading()
+            }
+        }
+    }
 }

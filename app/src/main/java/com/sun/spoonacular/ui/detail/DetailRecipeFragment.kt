@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.sun.spoonacular.R
 import com.sun.spoonacular.data.model.*
+import com.sun.spoonacular.ui.base.ViewModelFactory
 import com.sun.spoonacular.ui.detail.adapter.RecipeSimilarAdapter
 import com.sun.spoonacular.ui.detail.adapter.StepAdapter
 import com.sun.spoonacular.utils.Status
@@ -19,28 +20,27 @@ import com.sun.spoonacular.utils.addFragment
 import com.sun.spoonacular.utils.loadUrl
 import kotlinx.android.synthetic.main.fragment_detail.*
 
-@Suppress("UNCHECKED_CAST")
 class DetailRecipeFragment : Fragment() {
 
     private var recipeDetail: RecipeDetail? = null
     private var recipesSimilar = mutableListOf<Recipe>()
 
     private val stepAdapter by lazy { StepAdapter() }
-    private val adapter by lazy {
+    private val adapterSimilar by lazy {
         RecipeSimilarAdapter {
             (activity as? AppCompatActivity)?.addFragment(
-                newInstance(it.id),
-                R.id.mainContainer
+                newInstance(it.id), R.id.mainContainer
             )
         }
     }
     private val detailViewModel by lazy {
-        ViewModelProvider(this).get(DetailRecipeViewModel::class.java)
+        ViewModelProvider(this,
+            ViewModelFactory(arguments?.get(BUNDLE_ID_RECIPE) as Int)
+        ).get(DetailRecipeViewModel::class.java)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_detail, container, false)
     }
@@ -65,8 +65,6 @@ class DetailRecipeFragment : Fragment() {
             textStepError.visibility = View.VISIBLE
         }
         viewPagerStep.adapter = stepAdapter
-        adapter.submitList(recipesSimilar)
-        recyclerViewSimilarRecipe.adapter = adapter
         buttonNutrient.setOnClickListener {
             recipeDetail?.nutrients?.let {
                 NutrientFragment.newInstance(it.nutrients?.toList())
@@ -80,28 +78,45 @@ class DetailRecipeFragment : Fragment() {
         }
     }
 
+    private fun initSimilarRecipe() {
+        adapterSimilar.submitList(recipesSimilar)
+        recyclerViewSimilarRecipe.adapter = adapterSimilar
+    }
+
     private fun registerObservers() {
-        detailViewModel.fetchRecipeDetail(arguments?.get(BUNDLE_ID_RECIPE) as Int)
-        detailViewModel.getRecipeDetail()
-            .observe(viewLifecycleOwner, {
+        detailViewModel.apply {
+            recipeInfo.observe(viewLifecycleOwner, {
                 it?.let {
                     when (it.status) {
                         Status.SUCCESS -> {
-                            recipeDetail = it.data?.first() as RecipeDetail
-                            recipesSimilar = it.data[1] as MutableList<Recipe>
+                            recipeDetail = it.data?.body()
                             initView()
-                            viewLoading.visibility = View.GONE
                         }
-                        Status.ERROR -> {
-                            viewLoading.visibility = View.GONE
-                            Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
-                        }
-                        Status.LOADING -> {
-                            viewLoading.visibility = View.VISIBLE
-                        }
+                        Status.ERROR -> Toast.makeText(
+                            context, exception.toString(), Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             })
+
+            recipeSimilar.observe(viewLifecycleOwner, {
+                it?.let {
+                    when (it.status) {
+                        Status.SUCCESS -> {
+                            recipesSimilar = it.data?.body() as MutableList<Recipe>
+                            initSimilarRecipe()
+                        }
+                        Status.ERROR -> Toast.makeText(
+                            context, exception.toString(), Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            })
+
+            showLoading.observe(viewLifecycleOwner, {
+                if (!it) { viewLoading.visibility = View.GONE }
+            })
+        }
     }
 
     companion object {
