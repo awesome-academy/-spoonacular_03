@@ -4,18 +4,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sun.spoonacular.R
 import com.sun.spoonacular.data.model.Ingredient
 import com.sun.spoonacular.ui.detail.adapter.IngredientAdapter
+import com.sun.spoonacular.ui.ingredient.IngredientDetailFragment
+import com.sun.spoonacular.utils.addFragment
 import kotlinx.android.synthetic.main.fragment_bottom_sheet_ingredient.*
 
 @Suppress("UNCHECKED_CAST")
 class IngredientFragment : BottomSheetDialogFragment() {
 
     private var ingredients = listOf<Ingredient>()
-    private val adapter by lazy { IngredientAdapter {} }
+    private val adapter by lazy {
+        IngredientAdapter {
+            (activity as? AppCompatActivity)?.addFragment(
+                IngredientDetailFragment.newInstance(it),
+                R.id.mainContainer
+            )
+            dialog?.dismiss()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

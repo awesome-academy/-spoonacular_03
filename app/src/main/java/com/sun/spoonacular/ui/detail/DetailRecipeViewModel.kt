@@ -9,7 +9,7 @@ import com.sun.spoonacular.utils.Resource
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class DetailRecipeViewModel(idRecipe: Int) : BaseViewModel() {
+class DetailRecipeViewModel: BaseViewModel() {
 
     private val repository = Repository.getInstance()
 
@@ -21,7 +21,7 @@ class DetailRecipeViewModel(idRecipe: Int) : BaseViewModel() {
     val recipeSimilar: MutableLiveData<Resource<Response<List<Recipe>>>>
         get() = _recipeSimilar
 
-    init {
+    fun setData(idRecipe: Int){
         countLoading = 2
         fetchRecipeInfo(idRecipe)
         fetchRecipeSimilar(idRecipe)

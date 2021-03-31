@@ -12,7 +12,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.sun.spoonacular.R
 import com.sun.spoonacular.data.model.*
-import com.sun.spoonacular.ui.base.ViewModelFactory
 import com.sun.spoonacular.ui.detail.adapter.RecipeSimilarAdapter
 import com.sun.spoonacular.ui.detail.adapter.StepAdapter
 import com.sun.spoonacular.utils.Status
@@ -34,9 +33,7 @@ class DetailRecipeFragment : Fragment() {
         }
     }
     private val detailViewModel by lazy {
-        ViewModelProvider(this,
-            ViewModelFactory(arguments?.get(BUNDLE_ID_RECIPE) as Int)
-        ).get(DetailRecipeViewModel::class.java)
+        ViewModelProvider(this).get(DetailRecipeViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -85,6 +82,7 @@ class DetailRecipeFragment : Fragment() {
 
     private fun registerObservers() {
         detailViewModel.apply {
+            setData(arguments?.get(BUNDLE_ID_RECIPE) as Int)
             recipeInfo.observe(viewLifecycleOwner, {
                 it?.let {
                     when (it.status) {
@@ -114,7 +112,9 @@ class DetailRecipeFragment : Fragment() {
             })
 
             showLoading.observe(viewLifecycleOwner, {
-                if (!it) { viewLoading.visibility = View.GONE }
+                if (!it) {
+                    viewLoading.visibility = View.GONE
+                }
             })
         }
     }

@@ -21,6 +21,10 @@ class RemoteDataSource private constructor() : DataSource.Remote {
         return ApiClient.apiService.getRecipeSimilar(idRecipe)
     }
 
+    override suspend fun getRecipesByIngredient(nameIngredient: String): Response<List<Recipe>> {
+        return ApiClient.apiService.getRecipeByIngredient(nameIngredient)
+    }
+
     companion object {
         private var instance: RemoteDataSource? = null
         fun getInstance() = instance ?: RemoteDataSource().also { instance = it }

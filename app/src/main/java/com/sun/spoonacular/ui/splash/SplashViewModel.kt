@@ -30,7 +30,7 @@ class SplashViewModel : BaseViewModel() {
         showLoading.postValue(true)
         scope.launch {
             try {
-                recipeSlide.postValue(Resource.success(repository.getRecipe(NUMBER_COUNT_RECIPE_5)))
+                _recipeSlide.postValue(Resource.success(repository.getRecipe(NUMBER_COUNT_RECIPE_5)))
                 checkLoading()
             } catch (e: Exception) {
                 exception.postValue(e)
@@ -42,7 +42,7 @@ class SplashViewModel : BaseViewModel() {
     private fun fetchRecipesListTen() {
         scope.launch {
             try {
-                recipeRecyclerView.postValue(
+                _recipe.postValue(
                     Resource.success(
                         repository.getRecipe(
                             NUMBER_COUNT_RECIPE_10
