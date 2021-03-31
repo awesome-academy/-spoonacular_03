@@ -23,4 +23,12 @@ interface ApiService {
     suspend fun getRecipeSimilar(
         @Path("ids") id: Int,
     ): Response<List<Recipe>>
+
+    @GET("findByIngredients")
+    suspend fun getRecipeByIngredient(
+        @Query("ingredients") name: String,
+        @Query("number") number: Int = 50,
+        @Query("ranking") ranking: Int = 1,
+        @Query("ignorePantry") ignorePantry: Boolean = true
+    ): Response<List<Recipe>>
 }
