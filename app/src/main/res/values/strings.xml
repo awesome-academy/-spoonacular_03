@@ -14,4 +14,6 @@
     <string name="step">Step: %s</string>
     <string name="have_no_step">Sorry, this recipe have no step</string>
     <string name="text_step">"''"%s"''"</string>
+    <string name="type_here">Type here …</string>
+    <string name="see_result_for">See result for %s</string>
 </resources>
