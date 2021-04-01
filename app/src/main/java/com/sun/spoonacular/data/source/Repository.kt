@@ -10,6 +10,9 @@ class Repository private constructor(private val remote: DataSource.Remote) {
     suspend fun getRecipesByIngredient(nameIngredient: String) =
         remote.getRecipesByIngredient(nameIngredient)
 
+    suspend fun searchRecipeByName(nameRecipe: String, countRecipe: Int) =
+        remote.searchRecipeByName(nameRecipe, countRecipe)
+
     companion object {
         private var instance: Repository? = null
         fun getInstance() =
