@@ -3,6 +3,7 @@ package com.sun.spoonacular.data.source.remote.api
 import com.sun.spoonacular.data.model.Recipe
 import com.sun.spoonacular.data.model.RecipeDetail
 import com.sun.spoonacular.data.model.RecipeResponse
+import com.sun.spoonacular.data.model.SearchResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -31,4 +32,10 @@ interface ApiService {
         @Query("ranking") ranking: Int = 1,
         @Query("ignorePantry") ignorePantry: Boolean = true
     ): Response<List<Recipe>>
+
+    @GET("search")
+    suspend fun searchRecipeByName(
+        @Query("query") name: String,
+        @Query("number") number: Int
+    ): Response<SearchResponse>
 }
