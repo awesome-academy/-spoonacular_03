@@ -3,15 +3,15 @@ package com.sun.spoonacular.ui.detail
 import androidx.lifecycle.MutableLiveData
 import com.sun.spoonacular.data.model.Recipe
 import com.sun.spoonacular.data.model.RecipeDetail
-import com.sun.spoonacular.data.source.Repository
+import com.sun.spoonacular.data.source.repository.RecipeDetailRepository
 import com.sun.spoonacular.ui.base.BaseViewModel
 import com.sun.spoonacular.utils.Resource
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class DetailRecipeViewModel: BaseViewModel() {
+class DetailRecipeViewModel : BaseViewModel() {
 
-    private val repository = Repository.getInstance()
+    private val repository = RecipeDetailRepository.getInstance()
 
     private val _recipeInfo = MutableLiveData<Resource<Response<RecipeDetail>>>()
     val recipeInfo: MutableLiveData<Resource<Response<RecipeDetail>>>
@@ -21,7 +21,7 @@ class DetailRecipeViewModel: BaseViewModel() {
     val recipeSimilar: MutableLiveData<Resource<Response<List<Recipe>>>>
         get() = _recipeSimilar
 
-    fun setData(idRecipe: Int){
+    fun setData(idRecipe: Int) {
         countLoading = 2
         fetchRecipeInfo(idRecipe)
         fetchRecipeSimilar(idRecipe)

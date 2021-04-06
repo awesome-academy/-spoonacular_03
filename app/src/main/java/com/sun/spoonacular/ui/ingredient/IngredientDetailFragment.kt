@@ -95,20 +95,27 @@ class IngredientDetailFragment : Fragment() {
             fetchRecipeByIngredient(
                 arguments?.getString(
                     BUNDLE_NAME_INGREDIENT
-                ) ?: "")
+                ) ?: ""
+            )
+
             exception.observe(viewLifecycleOwner, {
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
             })
+
             recipes.observe(viewLifecycleOwner, {
                 adapterRecipe.submitList(it)
             })
+
             showLoading.observe(viewLifecycleOwner, {
                 if (!it) {
                     viewLoading.visibility = View.GONE
                 }
             })
+
             recipesAll.observe(viewLifecycleOwner, {
-                recipes.postValue(it.subList(0, 5))
+                if (it.size >= 5) {
+                    recipes.postValue(it.subList(0, 5))
+                } else recipes.postValue(it)
                 showLoading.postValue(false)
             })
         }
