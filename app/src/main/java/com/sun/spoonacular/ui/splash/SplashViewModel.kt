@@ -2,7 +2,7 @@ package com.sun.spoonacular.ui.splash
 
 import androidx.lifecycle.*
 import com.sun.spoonacular.data.model.RecipeResponse
-import com.sun.spoonacular.data.source.Repository
+import com.sun.spoonacular.data.source.repository.RecipeRepository
 import com.sun.spoonacular.ui.base.BaseViewModel
 import com.sun.spoonacular.utils.Resource
 import kotlinx.coroutines.*
@@ -10,7 +10,7 @@ import retrofit2.Response
 
 class SplashViewModel : BaseViewModel() {
 
-    private val repository = Repository.getInstance()
+    private val repository = RecipeRepository.getInstance()
 
     private val _recipeSlide = MutableLiveData<Resource<Response<RecipeResponse>>>()
     val recipeSlide: MutableLiveData<Resource<Response<RecipeResponse>>>

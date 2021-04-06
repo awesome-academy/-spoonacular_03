@@ -15,4 +15,6 @@ interface DataSource {
         suspend fun getRecipesByIngredient(nameIngredient: String): Response<List<Recipe>>
         suspend fun searchRecipeByName(nameRecipe: String, countRecipe: Int): Response<SearchResponse>
     }
+
+    interface Local{}
 }
