@@ -14,6 +14,7 @@ import com.sun.spoonacular.R
 import com.sun.spoonacular.data.model.*
 import com.sun.spoonacular.ui.detail.adapter.RecipeSimilarAdapter
 import com.sun.spoonacular.ui.detail.adapter.StepAdapter
+import com.sun.spoonacular.ui.favourite.FavouriteViewModel
 import com.sun.spoonacular.utils.Status
 import com.sun.spoonacular.utils.addFragment
 import com.sun.spoonacular.utils.loadUrl
@@ -21,8 +22,12 @@ import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailRecipeFragment : Fragment() {
 
+    private lateinit var detailViewModel: DetailRecipeViewModel
+    private lateinit var favouriteViewModel: FavouriteViewModel
+
     private var recipeDetail: RecipeDetail? = null
     private var recipesSimilar = mutableListOf<Recipe>()
+    private var isFavourite = false
 
     private val stepAdapter by lazy { StepAdapter() }
     private val adapterSimilar by lazy {
@@ -31,9 +36,6 @@ class DetailRecipeFragment : Fragment() {
                 newInstance(it.id), R.id.mainContainer
             )
         }
-    }
-    private val detailViewModel by lazy {
-        ViewModelProvider(this).get(DetailRecipeViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -44,10 +46,26 @@ class DetailRecipeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        detailViewModel = ViewModelProvider(this).get(DetailRecipeViewModel::class.java)
+        favouriteViewModel = ViewModelProvider(
+            requireActivity(),
+            ViewModelProvider.AndroidViewModelFactory(requireActivity().application)
+        ).get(FavouriteViewModel::class.java)
         registerObservers()
     }
 
     private fun initView() {
+        imgFavourite.setOnClickListener {
+            if (isFavourite) {
+                favouriteViewModel.deleteRecipe(arguments?.getInt(BUNDLE_ID_RECIPE) ?: -1)
+                Toast.makeText(context, R.string.removed, Toast.LENGTH_SHORT).show()
+            } else {
+                recipeDetail?.let {
+                    favouriteViewModel.addRecipe(takeRecipe())
+                    Toast.makeText(context, R.string.added, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
         imgBack.setOnClickListener {
             fragmentManager?.popBackStack(0, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
@@ -74,6 +92,14 @@ class DetailRecipeFragment : Fragment() {
             }
         }
     }
+
+    private fun takeRecipe() = RecipeFavourite(
+        recipeDetail?.id,
+        recipeDetail?.title,
+        recipeDetail?.timeCook.toString(),
+        recipeDetail?.score?.toDouble(),
+        recipeDetail?.image
+    )
 
     private fun initSimilarRecipe() {
         adapterSimilar.submitList(recipesSimilar)
@@ -117,9 +143,21 @@ class DetailRecipeFragment : Fragment() {
                 }
             })
         }
+        favouriteViewModel.apply {
+            arguments?.let { findExisted(it.getInt(BUNDLE_ID_RECIPE)) }
+            isFavourite.observe(viewLifecycleOwner, {
+                this@DetailRecipeFragment.isFavourite = it
+                if (it == true) {
+                    imgFavourite.setBackgroundResource(R.drawable.ic_favourited)
+                } else {
+                    imgFavourite.setBackgroundResource(R.drawable.ic_favourite)
+                }
+            })
+        }
     }
 
     companion object {
+
         private const val BUNDLE_ID_RECIPE = "BUNDLE_ID_RECIPE"
 
         fun newInstance(idRecipe: Int?) = DetailRecipeFragment().apply {

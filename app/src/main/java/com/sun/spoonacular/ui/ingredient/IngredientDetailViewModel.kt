@@ -2,7 +2,7 @@ package com.sun.spoonacular.ui.ingredient
 
 import androidx.lifecycle.MutableLiveData
 import com.sun.spoonacular.data.model.Recipe
-import com.sun.spoonacular.data.source.Repository
+import com.sun.spoonacular.data.source.repository.RecipeByIngredientRepository
 import com.sun.spoonacular.ui.base.BaseViewModel
 import com.sun.spoonacular.utils.Resource
 import com.sun.spoonacular.utils.safeLet
@@ -10,7 +10,7 @@ import kotlinx.coroutines.*
 
 class IngredientDetailViewModel : BaseViewModel() {
 
-    private val repository = Repository.getInstance()
+    private val repository = RecipeByIngredientRepository.getInstance()
     val recipes = MutableLiveData<MutableList<Recipe?>>()
     val recipesAll: MutableLiveData<MutableList<Recipe?>>
         get() = _recipesAll

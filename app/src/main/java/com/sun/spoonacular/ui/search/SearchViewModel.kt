@@ -3,7 +3,7 @@ package com.sun.spoonacular.ui.search
 import androidx.lifecycle.MutableLiveData
 import com.sun.spoonacular.data.model.Recipe
 import com.sun.spoonacular.data.model.SearchResponse
-import com.sun.spoonacular.data.source.Repository
+import com.sun.spoonacular.data.source.repository.SearchRepository
 import com.sun.spoonacular.ui.base.BaseViewModel
 import com.sun.spoonacular.utils.Resource
 import com.sun.spoonacular.utils.safeLet
@@ -17,7 +17,7 @@ class SearchViewModel : BaseViewModel() {
     val recipes = MutableLiveData<MutableList<Recipe?>>()
     val textSearching = MutableLiveData<String>()
 
-    private val repository = Repository.getInstance()
+    private val repository = SearchRepository.getInstance()
     private val _recipesAll = MutableLiveData<Resource<Response<SearchResponse>?>>()
     private val _recipeSearching = MutableLiveData<Resource<Response<SearchResponse>?>>()
 
