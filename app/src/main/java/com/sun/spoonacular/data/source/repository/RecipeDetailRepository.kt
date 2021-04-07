@@ -6,6 +6,7 @@ import com.sun.spoonacular.data.source.remote.RemoteDataSource
 class RecipeDetailRepository private constructor(private val remote: DataSource.Remote) {
 
     suspend fun getRecipeDetail(idRecipe: Int) = remote.getRecipeDetail(idRecipe)
+
     suspend fun getRecipesSimilar(idRecipe: Int) = remote.getRecipesSimilar(idRecipe)
 
     companion object {
@@ -13,7 +14,7 @@ class RecipeDetailRepository private constructor(private val remote: DataSource.
 
         fun getInstance() =
             instance
-                ?: RecipeDetailRepository((RemoteDataSource.getInstance()))
+                ?: RecipeDetailRepository(RemoteDataSource.getInstance())
                     .also { instance = it }
     }
 }

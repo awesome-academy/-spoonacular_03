@@ -12,7 +12,7 @@ class RecipeRepository private constructor(private val remote: DataSource.Remote
         private var instance: RecipeRepository? = null
 
         fun getInstance() =
-            instance ?: RecipeRepository((RemoteDataSource.getInstance()))
+            instance ?: RecipeRepository(RemoteDataSource.getInstance())
                 .also { instance = it }
     }
 }

@@ -12,7 +12,7 @@ class SearchRepository private constructor(private val remote: DataSource.Remote
         private var instance: SearchRepository? = null
 
         fun getInstance() =
-            instance ?: SearchRepository((RemoteDataSource.getInstance()))
+            instance ?: SearchRepository(RemoteDataSource.getInstance())
                 .also { instance = it }
     }
 }
